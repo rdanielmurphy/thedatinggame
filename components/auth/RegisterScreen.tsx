@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button, TextInput, View } from 'react-native';
 import firebase from 'firebase';
 
 export const RegisterScreen = () => {
@@ -9,14 +9,14 @@ export const RegisterScreen = () => {
 
     const onSignUp = () => {
         firebase.auth().createUserWithEmailAndPassword(email, password).then(result => {
-            const uid = firebase.auth().currentUser?.uid;
+            const uid = result.user?.uid;
             if (uid) {
                 firebase.firestore().collection("users").doc(uid).set({
                     name,
-                    email
+                    email,
+                    created: false,
                 });
             }
-            console.log(result);
         }).catch((e) => {
             console.error(e);
         });

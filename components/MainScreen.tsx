@@ -7,10 +7,12 @@ import { HomeScreen } from './home/HomeScreen';
 import { ChatsScreen } from './chats/ChatsScreen';
 import { AccountScreen } from './account/AccountScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { CreateProfileScreen } from '../components/account';
 
 const Tab = createBottomTabNavigator();
 
 export const MainScreen = () => {
+    const newUser: boolean = useSelector((state: any) => !state.userState.created);
     const loading: boolean = useSelector((state: any) => state.userState.loading);
     const dispatch = useDispatch();
 
@@ -22,6 +24,10 @@ export const MainScreen = () => {
                 <ActivityIndicator size="large" />
             </View>
         )
+    }
+
+    if (newUser) {
+        return (<CreateProfileScreen submitted={() => fetchUser()(dispatch)} />);
     }
 
     return (
