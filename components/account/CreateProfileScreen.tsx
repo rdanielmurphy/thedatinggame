@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, Platform, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, Platform, View, Button } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { GenderPicker } from './partials/GenderPicker';
 import firebase from 'firebase';

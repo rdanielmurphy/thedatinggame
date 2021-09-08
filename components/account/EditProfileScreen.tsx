@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { ActivityIndicator, Animated, Button, Image, Modal, Platform, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
+import { ActivityIndicator, Animated, Image, Modal, Platform, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { GenderPicker } from './partials/GenderPicker';
 import firebase from 'firebase';
@@ -7,6 +7,7 @@ import { DraggableGrid } from 'react-native-draggable-grid';
 import * as ImagePicker from 'expo-image-picker';
 import { UserState } from '../../redux/reducers/user';
 import { updateUser } from '../../redux/actions';
+import { Button, Divider, Headline, TextInput } from 'react-native-paper';
 
 const makeid = (length: number) => {
     var result = '';
@@ -143,21 +144,25 @@ export const EditProfileScreen = (navigation: any) => {
     return (
         <>
             <View style={{ flex: 1, justifyContent: 'center' }}>
-                <Text>Name:</Text>
                 <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                    style={styles.input}
+                    label="Name"
                     onChangeText={text => setName(text)}
                     value={name}
                 />
-                <Text>Bio:</Text>
                 <TextInput
+                    style={styles.input}
+                    label="Bio"
                     value={bio}
                     multiline={true}
                     numberOfLines={10}
                     onChangeText={text => setBio(text)}
                     maxLength={300} />
-                <Text>Interested in:</Text>
-                <GenderPicker allOption={true} defaultValue={matchWith} onChange={(g: number) => setMatchWith(g)} />
+                <View style={styles.picker}>
+                    <Text>Interested in:</Text>
+                    <GenderPicker allOption={true} defaultValue={matchWith} onChange={(g: number) => setMatchWith(g)} />
+                </View>
+                <Divider />
                 <DraggableGrid
                     numColumns={3}
                     renderItem={renderItem}
@@ -176,10 +181,12 @@ export const EditProfileScreen = (navigation: any) => {
                     }}
                 />
                 <Button
+                    style={styles.button}
+                    mode="contained"
                     disabled={name.length < 1 || matchWith === null || matchWith === undefined}
-                    onPress={() => submitForm()}
-                    title="Submit"
-                />
+                    onPress={() => submitForm()}>
+                    Save
+                </Button>
             </View>
             <Modal
                 animationType="slide"
@@ -187,35 +194,35 @@ export const EditProfileScreen = (navigation: any) => {
                 visible={modalVisible}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Edit Image</Text>
+                        <Headline style={styles.headlineContainer}>Edit Image</Headline>
                         <View style={styles.buttonContainer}>
-                            <TouchableHighlight
-                                style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
+                            <Button
+                                mode="contained"
                                 onPress={() => {
                                     setModalVisible(!modalVisible);
                                     pickImage(modalKey);
                                 }}>
-                                <Text style={styles.textStyle}>Replace Image</Text>
-                            </TouchableHighlight>
+                                Replace Image
+                            </Button>
                         </View>
                         <View style={styles.buttonContainer}>
-                            <TouchableHighlight
-                                style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
+                            <Button
+                                mode="contained"
                                 onPress={() => {
                                     setModalVisible(!modalVisible);
                                     deleteImage(modalKey);
                                 }}>
-                                <Text style={styles.textStyle}>Delete Image</Text>
-                            </TouchableHighlight>
+                                Delete Image
+                            </Button>
                         </View>
-                        <View style={styles.buttonContainer}>
-                            <TouchableHighlight
-                                style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
+                        <View style={styles.cancelButtonContainer}>
+                            <Button
+                                mode="outlined"
                                 onPress={() => {
                                     setModalVisible(!modalVisible);
                                 }}>
-                                <Text style={styles.textStyle}>Cancel</Text>
-                            </TouchableHighlight>
+                                Cancel
+                            </Button>
                         </View>
                     </View>
                 </View>
@@ -226,10 +233,13 @@ export const EditProfileScreen = (navigation: any) => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: "blue",
-        width: 25,
-        height: 25,
-        zIndex: 9999
+        margin: 10,
+    },
+    buttonContainer: {
+        marginBottom: 10,
+    },
+    cancelButtonContainer: {
+        marginTop: 10,
     },
     centeredView: {
         flex: 1,
@@ -241,22 +251,22 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
+    headlineContainer: {
+        marginBottom: 10,
+    },
     horizontal: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         padding: 10,
-    },
-    wrapper: {
-        paddingTop: 100,
-        width: '100%',
-        height: '100%',
-        justifyContent: 'center',
     },
     item: {
         width: 125,
         height: 125,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    input: {
+        margin: 10,
     },
     logo: {
         width: 125,
@@ -277,23 +287,11 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
-    openButton: {
-        backgroundColor: '#F194FF',
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
-        minWidth: 100,
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
     modalText: {
         marginBottom: 15,
         textAlign: 'center',
     },
-    buttonContainer: {
-        marginBottom: 10,
+    picker: {
+        padding: 20,
     }
 });

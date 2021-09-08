@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Button, TextInput, View } from 'react-native';
+import { View } from 'react-native';
 import firebase from 'firebase';
+import { Button, TextInput } from 'react-native-paper';
 
 export const LoginScreen = () => {
     const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ export const LoginScreen = () => {
     };
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', padding: 10 }}>
             <TextInput
                 placeholder="email"
                 onChangeText={(email) => setEmail(email)}
@@ -25,10 +26,9 @@ export const LoginScreen = () => {
                 secureTextEntry={true}
                 onChangeText={(password) => setPassword(password)}
             />
-            <Button
-                onPress={() => onLogIn()}
-                title="Log In"
-            />
+            <Button onPress={() => onLogIn()}>
+                Log In
+            </Button>
         </View>
     )
 }

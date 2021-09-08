@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import firebase from 'firebase';
-import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../redux/actions';
 
@@ -23,28 +24,26 @@ export const AccountScreen = (navigation: any) => {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
-            <Text>Welcome {userName}!</Text>
-            <Button
-                onPress={() => navigation.navigation.navigate("ViewProfile")}
-                title="View Profile"
-            />
-            <Button
-                onPress={() => navigation.navigation.navigate("EditProfile")}
-                title="Edit Profile"
-            />
-            <Button
-                onPress={() => navigation.navigation.navigate("EditGames")}
-                title="Edit Games"
-            />
-            <Button
-                onPress={() => firebase.auth().signOut()}
-                title="Sign Out"
-            />
+            <Button style={styles.button} mode="contained" onPress={() => navigation.navigation.navigate("ViewProfile")}>
+                View Profile
+            </Button>
+            <Button style={styles.button} mode="contained" onPress={() => navigation.navigation.navigate("EditProfile")}>
+                Edit Profile
+            </Button>
+            <Button style={styles.button} mode="contained" onPress={() => navigation.navigation.navigate("EditGames")}>
+                Edit Games
+            </Button>
+            <Button style={styles.button} mode="contained" onPress={() => firebase.auth().signOut()}>
+                Sign Out
+            </Button>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    button: {
+        margin: 10,
+    },
     container: {
         flex: 1,
         justifyContent: 'center',

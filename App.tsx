@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
-
+import { Provider as PaperProvider } from 'react-native-paper';
 import firebase from 'firebase';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -78,6 +78,8 @@ const AppRouter = () => {
 
 export default function App() {
   return (
-    <AppRouter />
+    <PaperProvider>
+      <AppRouter />
+    </PaperProvider>
   );
 }

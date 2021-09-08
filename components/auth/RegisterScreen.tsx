@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Button, TextInput, View } from 'react-native';
+import { View } from 'react-native';
 import firebase from 'firebase';
+import { Button, TextInput } from 'react-native-paper';
 
 export const RegisterScreen = () => {
     const [email, setEmail] = useState('');
@@ -23,7 +24,7 @@ export const RegisterScreen = () => {
     };
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', padding: 10 }}>
             <TextInput
                 placeholder="name"
                 onChangeText={(name) => setName(name)}
@@ -37,10 +38,9 @@ export const RegisterScreen = () => {
                 secureTextEntry={true}
                 onChangeText={(password) => setPassword(password)}
             />
-            <Button
-                onPress={() => onSignUp()}
-                title="Sign Up"
-            />
+            <Button onPress={() => onSignUp()}>
+                Sign Up
+            </Button>
         </View>
     )
 }
