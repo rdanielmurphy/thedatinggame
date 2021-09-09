@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { USER_STATE_CHANGE } from '../constants';
+import { CURRENT_CARD_SWIPE_LEFT, CURRENT_CARD_SWIPE_RIGHT, CURRENT_CARD_TAP_LEFT, CURRENT_CARD_TAP_RIGHT, USER_STATE_CHANGE } from '../constants';
 import { IUserProfle } from '../reducers/user';
 
 export const fetchUser = (callback?: () => void) => {
@@ -24,7 +24,6 @@ export const fetchUser = (callback?: () => void) => {
 }
 
 export const updateUser = (userProfile: IUserProfle, callback?: () => void) => {
-    console.log('callback1', callback);
     return ((dispatch: any) => {
         dispatch({ type: USER_STATE_CHANGE, currentUser: {}, loading: true });
         firebase.firestore()
@@ -32,5 +31,29 @@ export const updateUser = (userProfile: IUserProfle, callback?: () => void) => {
             .doc(firebase.auth().currentUser?.uid)
             .update(userProfile)
             .then(() => fetchUser(callback)(dispatch));
+    });
+}
+
+export const tapLeftOnCurrentCard = () => {
+    return ((dispatch: any) => {
+        dispatch({ type: CURRENT_CARD_TAP_LEFT });
+    });
+}
+
+export const tapRightOnCurrentCard = () => {
+    return ((dispatch: any) => {
+        dispatch({ type: CURRENT_CARD_TAP_RIGHT });
+    });
+}
+
+export const swipeLeftOnCurrentCard = () => {
+    return ((dispatch: any) => {
+        dispatch({ type: CURRENT_CARD_SWIPE_LEFT });
+    });
+}
+
+export const swipeRightOnCurrentCard = () => {
+    return ((dispatch: any) => {
+        dispatch({ type: CURRENT_CARD_SWIPE_RIGHT });
     });
 }

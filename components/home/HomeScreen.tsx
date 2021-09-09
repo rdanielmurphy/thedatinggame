@@ -1,6 +1,7 @@
 import React from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import SwipeableContainer from './partials/SwipableContainer';
 
 export const HomeScreen = () => {
     const loading: boolean = useSelector((state: any) => state.userState.loading);
@@ -18,7 +19,7 @@ export const HomeScreen = () => {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
-            <Text>This is the home screen!</Text>
+            <SwipeableContainer />
         </View>
     )
 }
