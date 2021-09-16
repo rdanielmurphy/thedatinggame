@@ -1,21 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Image, View, StyleSheet, Dimensions } from "react-native";
-import { useSelector } from "react-redux";
+import React from "react";
+import { Image, View, StyleSheet } from "react-native";
 import { ICard } from "../../../redux/reducers/cards";
-import { Colors, Headline, List, Text } from 'react-native-paper';
+import { Colors, Headline, Text } from 'react-native-paper';
 import ImageTabs from "./ImageTabs";
 
-const ProfileCard = () => {
-    const cards: ICard[] = useSelector((state: any) => state.cardsState.cards);
-    const currentCard: number = useSelector((state: any) => state.cardsState.currentCard);
-    const currentImage: number = useSelector((state: any) => state.cardsState.currentImage);
+interface IProfileCardProps {
+    card: ICard;
+    currentImage: number;
+};
 
-    const currentCardObj = cards[currentCard];
-
-    if (currentCardObj === undefined) {
-        return <View style={styles.box}></View>;
+const ProfileCard = (props: IProfileCardProps) => {
+    if (props.card === undefined) {
+        return <View style={styles.box}>Ran out of macthes!</View>;
     }
 
+    console.log('props.currentImage', props.currentImage);
     return (
         <View style={styles.box}>
             <Image
@@ -25,7 +24,7 @@ const ProfileCard = () => {
                     borderRadius: 20
                 }}
                 source={{
-                    uri: currentCardObj.images[currentImage]
+                    uri: props.card.images[props.currentImage]
                 }}
             />
             <View
@@ -35,13 +34,13 @@ const ProfileCard = () => {
                         flexDirection: "row",
                     },
                 ]}>
-                <ImageTabs />
+                {props.card.images.length > 1 && <ImageTabs count={props.card.images.length} currentImage={props.currentImage} />}
             </View>
             <View style={styles.bioContainer}>
             </View>
             <View style={styles.bioSubContainer}>
-                <Headline style={styles.bio}>{currentCardObj.name}</Headline>
-                <Text style={styles.bio}>{currentCardObj.bio}</Text>
+                <Headline style={styles.bio}>{props.card.name}</Headline>
+                <Text style={styles.bio}>{props.card.bio}</Text>
             </View>
         </View>
     );
