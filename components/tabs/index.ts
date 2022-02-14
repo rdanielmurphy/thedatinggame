@@ -1,0 +1,16 @@
+export { DetailsTab } from './DetailsTab';
+export { DiningRoomTab } from './DiningRoomTab';
+export { ElectricCoolingSystemTab } from './ElectricCoolingSystemTab'
+export { ExteriorTab } from './ExteriorTab';
+export { GroundsTab } from './GroundsTab';
+export { HeatingSystemTab } from './HeatingSystemTab';
+export { InteriorTab } from './InteriorTab';
+export { InvoiceTab } from './InvoiceTab';
+export { KitchenTab } from './KitchenTab';
+export { LaundryRoomTab } from './LaundryRoomTab';
+export { LivingRoomTab } from './LivingRoomTab';
+export { OverviewTab } from './OverviewTab';
+export { PhotosTab } from './PhotosTab';
+export { PlumbingTab } from './PlumbingTab';
+export { RoofTab } from './RoofTab';
+export { SummaryTab } from './SummaryTab';
