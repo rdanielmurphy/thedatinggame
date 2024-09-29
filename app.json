@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rev-spect",
-    "slug": "rev-spect",
+    "name": "thedatingapp",
+    "slug": "thedatingapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
