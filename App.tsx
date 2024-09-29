@@ -1,9 +1,16 @@
-import React from 'react';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
+import firebase from 'firebase';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import { LandingScreen } from './components/auth/LandingScreen';
+import { RegisterScreen } from './components/auth/RegisterScreen';
+import { LoginScreen } from './components/auth/LoginScreen';
 import { MainScreen } from './components/MainScreen';
-import { AdministrationScreen, InspectionReportEditorScreen, ExistingReportsScreen, SettingsScreen } from './components/pages';
+import { EditGamesScreen, EditProfileScreen, ViewProfileScreen } from './components/account';
+
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './redux/reducers';
@@ -17,35 +24,61 @@ const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk
 
 const Stack = createStackNavigator();
 const AppRouter = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  LogBox.ignoreLogs(['Setting a timer']);
+
+  if (firebase.apps.length === 0) {
+    firebase.initializeApp(Constants.manifest?.extra?.firebaseCreds);
+  }
+  firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+      setLoggedIn(false);
+      setLoaded(true);
+    } else {
+      setLoggedIn(true);
+      setLoaded(true);
+    }
+  })
+
+  if (!loaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <Text>Loading</Text>
+      </View>);
+  }
+
+  if (!loggedIn) {
+    return (<>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Landing">
+          <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>);
+  }
+
   // If logged in and existing user
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Main">
           <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="CreateNewInspectionReport" component={InspectionReportEditorScreen} options={{ title: 'Create New Inspection Report' }} />
-          <Stack.Screen name="ExistingReports" component={ExistingReportsScreen} options={{ title: 'Existing Reports' }} />
-          <Stack.Screen name="Administration" component={AdministrationScreen} options={{ title: 'Administration' }} />
-          <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
+          <Stack.Screen name="EditGames" component={EditGamesScreen} options={{ title: 'Game Editor' }} />
+          <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ title: 'Profile Editor' }} />
+          <Stack.Screen name="ViewProfile" component={ViewProfileScreen} options={{ title: 'View Profile' }} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
 }
 
-const theme = {
-  ...DefaultTheme,
-  roundness: 2,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#3d3d3d',
-    accent: '#4f4f4f',
-  },
-};
-
 export default function App() {
   return (
-    <PaperProvider theme={theme}>
+    <PaperProvider>
       <AppRouter />
     </PaperProvider>
   );

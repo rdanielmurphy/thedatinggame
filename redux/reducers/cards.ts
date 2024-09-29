@@ -1,4 +1,4 @@
-import { CURRENT_CARD_SWIPE_LEFT, CURRENT_CARD_SWIPE_RIGHT, CURRENT_IMAGE_DOWN, CURRENT_IMAGE_UP} from '../constants';
+import { CURRENT_CARD_SWIPE_LEFT, CURRENT_CARD_SWIPE_RIGHT } from '../constants';
 
 interface IState {
     loading: boolean;
@@ -15,9 +15,6 @@ export interface ICard {
 export interface ICards {
     cards: ICard[];
     updateCounter: number;
-    currentCard: ICard | null;
-    cardQueue: ICard[];
-    currentImage: number;
 };
 
 export type CardState =
@@ -54,9 +51,6 @@ const initialState: CardState = {
         result: null,
         uid: '5',
     }],
-    cardQueue: [],
-    currentCard: null,
-    currentImage: 0,
     updateCounter: 1,
 }
 
@@ -83,23 +77,6 @@ export const cards = (state: any, action: any) => {
                 }
             }
             return state;
-        case CURRENT_IMAGE_DOWN:
-            if (state.cards && state.cards[state.currentCard] !== undefined) {
-                state.currentImage = state.currentImage > 0 ? state.currentImage - 1 : 0;
-                return {
-                    ...state,
-                }
-            }
-            return state;
-        case CURRENT_IMAGE_UP:
-                if (state.cards && state.currentCard !== null && 
-                    state.currentCard.images[state.currentImage + 1] !== undefined) {
-                    state.currentImage = state.currentImage + 1;
-                    return {
-                        ...state,
-                    }
-                }
-                return state;
         default:
             return state;
     }

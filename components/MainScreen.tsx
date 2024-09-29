@@ -1,52 +1,60 @@
-import React from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import { Button, useTheme } from 'react-native-paper';
-import { useDefaultData } from '../hooks/useDefaultData';
-import { NewInspectionModal } from './modals/NewInspectionModal'
+import React, { useEffect } from 'react'
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '../redux/actions';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { HomeScreen } from './home/HomeScreen';
+import { ChatsScreen } from './chats/ChatsScreen';
+import { AccountScreen } from './account/AccountScreen';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { CreateProfileScreen } from '../components/account';
 
-export const MainScreen = (navigation: any) => {
-    const { colors } = useTheme();
-    const [showModal, setShowMoal] = React.useState(false);
-    const defaultData = useDefaultData()
+const Tab = createBottomTabNavigator();
 
-    const onModalSubmit = () => {
-        setShowMoal(false);
-        navigation.navigation.navigate("CreateNewInspectionReport");
+export const MainScreen = () => {
+    const newUser: boolean = useSelector((state: any) => !state.userState.created);
+    const loading: boolean = useSelector((state: any) => state.userState.loading);
+    const dispatch = useDispatch();
+
+    useEffect(() => fetchUser()(dispatch), []);
+
+    if (loading) {
+        return (
+            <View style={[styles.container, styles.horizontal]}>
+                <ActivityIndicator size="large" />
+            </View>
+        )
+    }
+
+    if (newUser) {
+        return (<CreateProfileScreen submitted={() => fetchUser()(dispatch)} />);
     }
 
     return (
-        <>
-            {defaultData === null &&
-                <View style={{ flex: 1, justifyContent: 'center' }}>
-                    <ActivityIndicator size="large" />
-                </View>
-            }
-            {defaultData !== null &&
-                <View style={{ flex: 1, justifyContent: 'center' }}>
-                    <Button style={styles.button} color={colors.accent} icon="plus" mode="contained" onPress={() => setShowMoal(true)}>
-                        Create New Inspection Report
-                    </Button>
-                    <Button style={styles.button} icon="pencil" mode="contained" onPress={() => navigation.navigation.navigate("ExistingReports")}>
-                        Existing Reports
-                    </Button>
-                    <Button style={styles.button} icon="information-outline" mode="contained" onPress={() => navigation.navigation.navigate("Administration")}>
-                        Administration
-                    </Button>
-                    <Button style={styles.button} icon="tune" mode="contained" onPress={() => navigation.navigation.navigate("Settings")}>
-                        Settings
-                    </Button>
-                    {showModal && <NewInspectionModal onClose={() => setShowMoal(false)} onSubmit={onModalSubmit} />}
-                </View>
-            }
-        </>
+        <Tab.Navigator>
+            <Tab.Screen name="Home" component={HomeScreen} options={{
+                headerShown: false,
+                tabBarIcon: ({ color }) => (
+                    <MaterialCommunityIcons name="home" color={color} size={26} />
+                )
+            }} />
+            <Tab.Screen name="Chats" component={ChatsScreen} options={{
+                headerShown: false,
+                tabBarIcon: ({ color }) => (
+                    <MaterialCommunityIcons name="forum" color={color} size={26} />
+                )
+            }} />
+            <Tab.Screen name="Account" component={AccountScreen} options={{
+                headerShown: false,
+                tabBarIcon: ({ color }) => (
+                    <MaterialCommunityIcons name="account" color={color} size={26} />
+                )
+            }} />
+        </Tab.Navigator>
     )
 }
 
 const styles = StyleSheet.create({
-    button: {
-        margin: 10,
-        width: 400,
-    },
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -57,4 +65,3 @@ const styles = StyleSheet.create({
         padding: 10,
     },
 });
-
