@@ -1,9 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { View, FlatList, Image, StyleSheet, Dimensions, Text } from 'react-native';
+import { View, FlatList, Image, StyleSheet, Text } from 'react-native';
 import { COLORS } from '../constants/theme';
 import { API_URL } from '../constants/config';
-
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const getPhotoUri = (photo) => {
   if (!photo) return null;
@@ -13,6 +11,7 @@ const getPhotoUri = (photo) => {
 
 export default function PhotoCarousel({ photos, style }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [layout, setLayout] = useState(null);
   const flatListRef = useRef(null);
 
   const onViewableItemsChanged = useCallback(({ viewableItems }) => {
@@ -23,6 +22,11 @@ export default function PhotoCarousel({ photos, style }) {
 
   const viewabilityConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
+  const onLayout = useCallback((e) => {
+    const { width, height } = e.nativeEvent.layout;
+    setLayout({ width, height });
+  }, []);
+
   if (!photos || photos.length === 0) {
     return (
       <View style={[styles.container, style, styles.placeholder]}>
@@ -31,26 +35,31 @@ export default function PhotoCarousel({ photos, style }) {
     );
   }
 
-  const containerWidth = style?.width || SCREEN_WIDTH;
-
   return (
-    <View style={[styles.container, style]}>
-      <FlatList
-        ref={flatListRef}
-        data={photos}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => `${item}-${index}`}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
-        renderItem={({ item }) => (
-          <Image
-            source={{ uri: getPhotoUri(item) }}
-            style={[styles.image, { width: containerWidth }]}
-          />
-        )}
-      />
+    <View style={[styles.container, style]} onLayout={onLayout}>
+      {layout && (
+        <FlatList
+          ref={flatListRef}
+          data={photos}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item, index) => `${item}-${index}`}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={viewabilityConfig}
+          renderItem={({ item }) => (
+            <Image
+              source={{ uri: getPhotoUri(item) }}
+              style={{ width: layout.width, height: layout.height, resizeMode: 'cover' }}
+            />
+          )}
+          getItemLayout={(_, index) => ({
+            length: layout.width,
+            offset: layout.width * index,
+            index,
+          })}
+        />
+      )}
       {photos.length > 1 && (
         <View style={styles.dots}>
           {photos.map((_, i) => (
@@ -68,10 +77,6 @@ export default function PhotoCarousel({ photos, style }) {
 const styles = StyleSheet.create({
   container: {
     overflow: 'hidden',
-  },
-  image: {
-    height: '100%',
-    resizeMode: 'cover',
   },
   placeholder: {
     backgroundColor: COLORS.lightGray,
