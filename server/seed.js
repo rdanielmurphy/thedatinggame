@@ -262,7 +262,7 @@ async function seed() {
   for (const u of dummyUsers) {
     const user = await User.create({
       email: u.email,
-      password: hashedPw,
+      password: YOUR_PASSWORD,
       name: u.name,
       bio: u.bio,
       photos: u.photos || [],
