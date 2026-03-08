@@ -9,7 +9,7 @@ import * as api from '../services/api';
 import { getSocket } from '../services/socket';
 
 export default function ChatScreen({ route, navigation }) {
-  const { conversationId, userName, userPhoto } = route.params;
+  const { conversationId, userName, userPhoto, userId } = route.params;
   const { user } = useAuth();
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState('');
@@ -20,15 +20,19 @@ export default function ChatScreen({ route, navigation }) {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+          onPress={() => userId && navigation.navigate('UserProfile', { userId })}
+          activeOpacity={0.7}
+        >
           {userPhoto ? (
             <Image source={{ uri: userPhoto }} style={{ width: 32, height: 32, borderRadius: 16, marginRight: 10 }} />
           ) : null}
           <Text style={{ color: COLORS.white, fontSize: 18, fontWeight: '700' }}>{userName}</Text>
-        </View>
+        </TouchableOpacity>
       ),
     });
-  }, [userName, userPhoto]);
+  }, [userName, userPhoto, userId]);
 
   useEffect(() => {
     loadMessages();

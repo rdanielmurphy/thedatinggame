@@ -8,6 +8,7 @@ import { COLORS, SHADOWS } from '../constants/theme';
 import { API_URL } from '../constants/config';
 import * as api from '../services/api';
 import QuestionModal from '../components/QuestionModal';
+import PhotoCarousel from '../components/PhotoCarousel';
 
 const { width, height } = Dimensions.get('window');
 const SWIPE_THRESHOLD = width * 0.25;
@@ -141,19 +142,12 @@ export default function DiscoverScreen() {
       );
     }
 
-    const photo = currentCard.photos?.[0];
     return (
       <Animated.View
         {...panResponder.panHandlers}
         style={[styles.card, { transform: [{ translateX: position.x }, { translateY: position.y }, { rotate }] }, SHADOWS.card]}
       >
-        {photo ? (
-          <Image source={{ uri: getPhotoUri(photo) }} style={styles.cardImage} />
-        ) : (
-          <View style={[styles.cardImage, styles.noPhoto]}>
-            <Text style={{ fontSize: 80 }}>👤</Text>
-          </View>
-        )}
+        <PhotoCarousel photos={currentCard.photos} style={styles.cardImage} />
 
         <Animated.View style={[styles.stamp, styles.likeStamp, { opacity: likeOpacity }]}>
           <Text style={styles.stampText}>LIKE ❤️</Text>

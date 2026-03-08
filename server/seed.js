@@ -31,6 +31,7 @@ const dummyUsers = [
     bio: 'Coffee snob. Trail runner. Building stuff with code.',
     gender: 'female',
     age: 27,
+    photos: ['https://i.pravatar.cc/600?img=1', 'https://i.pravatar.cc/600?u=maya1', 'https://i.pravatar.cc/600?u=maya2'],
     question: { text: 'What\'s the best IDE?', options: ['VS Code', 'IntelliJ', 'Vim', 'Notepad'], correctIndex: 0 },
   },
   {
@@ -39,6 +40,7 @@ const dummyUsers = [
     bio: 'Pastry chef by day, gamer by night. Fluent in French and sarcasm.',
     gender: 'female',
     age: 25,
+    photos: ['https://i.pravatar.cc/600?img=5', 'https://i.pravatar.cc/600?u=sophie1', 'https://i.pravatar.cc/600?u=sophie2', 'https://i.pravatar.cc/600?u=sophie3'],
     question: { text: 'Best croissant filling?', options: ['Chocolate', 'Almond', 'Ham & cheese', 'Nothing, plain is king'], correctIndex: 3 },
   },
   {
@@ -47,6 +49,7 @@ const dummyUsers = [
     bio: 'Photographer. Vinyl collector. Makes a mean espresso martini.',
     gender: 'male',
     age: 29,
+    photos: ['https://i.pravatar.cc/600?img=11', 'https://i.pravatar.cc/600?u=alex1', 'https://i.pravatar.cc/600?u=alex2'],
     question: { text: 'Best music decade?', options: ['60s', '70s', '80s', '90s'], correctIndex: 2 },
   },
   {
@@ -55,6 +58,7 @@ const dummyUsers = [
     bio: 'Non-binary queen. Data scientist who unironically loves spreadsheets.',
     gender: 'nonbinary',
     age: 26,
+    photos: ['https://i.pravatar.cc/600?img=12', 'https://i.pravatar.cc/600?u=jordan1'],
     question: { text: 'Tabs or spaces?', options: ['Tabs', 'Spaces', 'Whatever the formatter says', 'I use Scratch'], correctIndex: 2 },
   },
   {
@@ -63,6 +67,7 @@ const dummyUsers = [
     bio: 'ER nurse. Bookworm. Will absolutely destroy you at Mario Kart.',
     gender: 'female',
     age: 28,
+    photos: ['https://i.pravatar.cc/600?img=9', 'https://i.pravatar.cc/600?u=emma1', 'https://i.pravatar.cc/600?u=emma2'],
     question: { text: 'Best Mario Kart character?', options: ['Toad', 'Yoshi', 'Peach', 'Dry Bones'], correctIndex: 3 },
   },
   {
@@ -71,6 +76,7 @@ const dummyUsers = [
     bio: 'Architect. Climber. Dog dad to a very dramatic husky.',
     gender: 'male',
     age: 31,
+    photos: ['https://i.pravatar.cc/600?img=14', 'https://i.pravatar.cc/600?u=liam1', 'https://i.pravatar.cc/600?u=liam2', 'https://i.pravatar.cc/600?u=liam3'],
     question: { text: 'Best dog breed?', options: ['Golden Retriever', 'Husky', 'Corgi', 'Mutt'], correctIndex: 1 },
   },
   {
@@ -79,6 +85,7 @@ const dummyUsers = [
     bio: 'Startup founder. Yoga addict. Will talk your ear off about space.',
     gender: 'female',
     age: 30,
+    photos: ['https://i.pravatar.cc/600?img=21', 'https://i.pravatar.cc/600?u=priya1', 'https://i.pravatar.cc/600?u=priya2'],
     question: { text: 'Coolest planet?', options: ['Mars', 'Saturn', 'Jupiter', 'Earth (boring but true)'], correctIndex: 1 },
   },
   {
@@ -87,6 +94,7 @@ const dummyUsers = [
     bio: 'DJ on weekends. Frontend dev on weekdays. Cat person.',
     gender: 'male',
     age: 24,
+    photos: ['https://i.pravatar.cc/600?img=33', 'https://i.pravatar.cc/600?u=kai1'],
     question: { text: 'Best JS framework?', options: ['React', 'Vue', 'Svelte', 'jQuery forever'], correctIndex: 2 },
   },
   {
@@ -95,6 +103,7 @@ const dummyUsers = [
     bio: 'Marine biologist. Surfer. Will send you way too many otter facts.',
     gender: 'female',
     age: 27,
+    photos: ['https://i.pravatar.cc/600?img=25', 'https://i.pravatar.cc/600?u=zoe1', 'https://i.pravatar.cc/600?u=zoe2', 'https://i.pravatar.cc/600?u=zoe3'],
     question: { text: 'Cutest sea creature?', options: ['Otter', 'Seahorse', 'Clownfish', 'Jellyfish'], correctIndex: 0 },
   },
   {
@@ -103,6 +112,7 @@ const dummyUsers = [
     bio: 'Stand-up comedian. Makes really good dal. Terrible at golf.',
     gender: 'male',
     age: 28,
+    photos: ['https://i.pravatar.cc/600?img=51', 'https://i.pravatar.cc/600?u=sam1', 'https://i.pravatar.cc/600?u=sam2'],
     question: { text: 'Best comedy special?', options: ['Nanette', 'Sticks & Stones', 'Inside', 'Killin\' Them Softly'], correctIndex: 2 },
   },
   {
@@ -111,6 +121,7 @@ const dummyUsers = [
     bio: 'Game designer. Pixel art enthusiast. Always has snacks.',
     gender: 'nonbinary',
     age: 23,
+    photos: ['https://i.pravatar.cc/600?img=35', 'https://i.pravatar.cc/600?u=riley1'],
     question: { text: 'Best retro console?', options: ['SNES', 'Genesis', 'N64', 'PS1'], correctIndex: 0 },
   },
   {
@@ -119,6 +130,7 @@ const dummyUsers = [
     bio: 'Tattoo artist. Plays bass in a band you haven\'t heard of.',
     gender: 'female',
     age: 26,
+    photos: ['https://i.pravatar.cc/600?img=44', 'https://i.pravatar.cc/600?u=olivia1', 'https://i.pravatar.cc/600?u=olivia2'],
     question: { text: 'Best tattoo placement?', options: ['Forearm', 'Back', 'Ribs', 'Behind the ear'], correctIndex: 0 },
   },
   {
@@ -127,6 +139,7 @@ const dummyUsers = [
     bio: 'Personal trainer. History nerd. Makes sourdough every Sunday.',
     gender: 'male',
     age: 32,
+    photos: ['https://i.pravatar.cc/600?img=52', 'https://i.pravatar.cc/600?u=marcus1', 'https://i.pravatar.cc/600?u=marcus2', 'https://i.pravatar.cc/600?u=marcus3'],
     question: { text: 'Best bread?', options: ['Sourdough', 'Baguette', 'Focaccia', 'Naan'], correctIndex: 0 },
   },
   {
@@ -135,6 +148,7 @@ const dummyUsers = [
     bio: 'Documentary filmmaker. Collects vintage cameras. Tea over coffee.',
     gender: 'female',
     age: 29,
+    photos: ['https://i.pravatar.cc/600?img=47', 'https://i.pravatar.cc/600?u=ava1', 'https://i.pravatar.cc/600?u=ava2'],
     question: { text: 'Best documentary?', options: ['Planet Earth', 'Free Solo', 'Jiro Dreams of Sushi', 'Won\'t You Be My Neighbor?'], correctIndex: 2 },
   },
   {
@@ -143,6 +157,7 @@ const dummyUsers = [
     bio: 'Mechanical engineer. Homebrew hobbyist. Knows way too much about F1.',
     gender: 'male',
     age: 30,
+    photos: ['https://i.pravatar.cc/600?img=53', 'https://i.pravatar.cc/600?u=tyler1', 'https://i.pravatar.cc/600?u=tyler2'],
     question: { text: 'Best F1 team?', options: ['Ferrari', 'McLaren', 'Red Bull', 'Mercedes'], correctIndex: 1 },
   },
 ];
@@ -228,7 +243,7 @@ async function seed() {
     password: YOUR_PASSWORD,
     name: YOUR_NAME,
     bio: 'Just a coder looking for good vibes.',
-    photos: [],
+    photos: ['https://i.pravatar.cc/600?img=60', 'https://i.pravatar.cc/600?u=dan1', 'https://i.pravatar.cc/600?u=dan2'],
     question: {
       text: 'What language is the best?',
       options: ['JavaScript', 'Python', 'Rust', 'Go'],
@@ -250,7 +265,7 @@ async function seed() {
       password: hashedPw,
       name: u.name,
       bio: u.bio,
-      photos: [],
+      photos: u.photos || [],
       question: u.question,
       location: randomSFLocation(),
       gender: u.gender,

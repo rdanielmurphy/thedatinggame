@@ -45,16 +45,22 @@ export default function MatchesScreen({ navigation }) {
           conversationId: item.conversationId,
           userName: user?.name,
           userPhoto: photo ? getPhotoUri(photo) : null,
+          userId: user?._id,
         })}
         activeOpacity={0.8}
       >
-        {photo ? (
-          <Image source={{ uri: getPhotoUri(photo) }} style={styles.avatar} />
-        ) : (
-          <View style={[styles.avatar, styles.noAvatar]}>
-            <Text style={{ fontSize: 28 }}>👤</Text>
-          </View>
-        )}
+        <TouchableOpacity
+          onPress={() => user?._id && navigation.navigate('UserProfile', { userId: user._id })}
+          activeOpacity={0.7}
+        >
+          {photo ? (
+            <Image source={{ uri: getPhotoUri(photo) }} style={styles.avatar} />
+          ) : (
+            <View style={[styles.avatar, styles.noAvatar]}>
+              <Text style={{ fontSize: 28 }}>👤</Text>
+            </View>
+          )}
+        </TouchableOpacity>
         <View style={styles.matchInfo}>
           <Text style={styles.matchName}>{user?.name || 'Unknown'}</Text>
           <Text style={styles.matchBio} numberOfLines={1}>{user?.bio || 'New match!'}</Text>

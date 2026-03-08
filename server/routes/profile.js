@@ -20,6 +20,17 @@ router.get('/me', auth, async (req, res) => {
   res.json({ user: req.user.toPublicProfile() });
 });
 
+// Get public profile by ID
+router.get('/:userId', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json({ user: user.toPublicProfile() });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Update profile
 router.put('/me', auth, async (req, res) => {
   try {

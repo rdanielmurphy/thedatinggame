@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import AuthNavigator from './AuthNavigator';
 import MainTabs from './MainTabs';
 import ChatScreen from '../screens/ChatScreen';
+import UserProfileScreen from '../screens/UserProfileScreen';
 import { COLORS } from '../constants/theme';
 
 const Stack = createNativeStackNavigator();
@@ -35,6 +36,11 @@ export default function RootNavigator() {
               headerStyle: { backgroundColor: COLORS.primary },
               headerTintColor: COLORS.white,
             }}
+          />
+          <Stack.Screen
+            name="UserProfile"
+            component={UserProfileScreen}
+            options={{ headerShown: false }}
           />
         </>
       )}
