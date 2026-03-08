@@ -35,16 +35,23 @@ npm install
 npx expo start
 ```
 
+### Demo env
+```bash
+node seed.js
+```
+
+Seeds the environment with users and messages etc
+
 Scan the QR code with Expo Go, or press `i` for iOS simulator / `a` for Android emulator.
 
 ### Environment Variables (server/.env)
 
-| Variable | Description | Default |
-|---|---|---|
-| PORT | Server port | 3000 |
-| MONGODB_URI | MongoDB connection string | mongodb://localhost:27017/dating-game |
-| JWT_SECRET | Secret for signing tokens | (required) |
-| MAX_DISTANCE_KM | Default discovery radius | 50 |
+| Variable        | Description               | Default                               |
+| --------------- | ------------------------- | ------------------------------------- |
+| PORT            | Server port               | 3000                                  |
+| MONGODB_URI     | MongoDB connection string | mongodb://localhost:27017/dating-game |
+| JWT_SECRET      | Secret for signing tokens | (required)                            |
+| MAX_DISTANCE_KM | Default discovery radius  | 50                                    |
 
 ## How It Works
 

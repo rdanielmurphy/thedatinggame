@@ -223,10 +223,9 @@ async function seed() {
   console.log('Cleared all collections');
 
   // Create Dan's account
-  const hashedPw = await bcrypt.hash(YOUR_PASSWORD, 12);
   const dan = await User.create({
     email: YOUR_EMAIL,
-    password: hashedPw,
+    password: YOUR_PASSWORD,
     name: YOUR_NAME,
     bio: 'Just a coder looking for good vibes.',
     photos: [],

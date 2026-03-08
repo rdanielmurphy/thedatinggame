@@ -31,6 +31,8 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required' });
     }
     const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+    console.log('Login attempt for:', email, 'User found:', !!user);
+    console.log('comparePassword:', password);
     if (!user || !(await user.comparePassword(password))) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
