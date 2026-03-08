@@ -15,6 +15,7 @@ const messageRoutes = require('./routes/messages');
 
 const Message = require('./models/Message');
 const Conversation = require('./models/Conversation');
+const { setupDevBot } = require('./dev-bot');
 
 const app = express();
 const server = http.createServer(app);
@@ -29,6 +30,12 @@ app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/discovery', discoveryRoutes);
 app.use('/api/matches', matchRoutes);
+// Dev bot auto-reply middleware (only active in non-production)
+const devBotMiddleware = setupDevBot(io);
+if (devBotMiddleware) {
+  app.use('/api/messages', devBotMiddleware);
+}
+
 app.use('/api/messages', messageRoutes);
 
 app.get('/health', (_, res) => res.json({ ok: true }));
