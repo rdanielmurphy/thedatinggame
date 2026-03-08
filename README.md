@@ -1,30 +1,62 @@
-# The Dating Game App
+# Dating Game 💘
 
-## Frontend
-React native with Typescript using Expo for convenience
+A Tinder-style dating app with a twist: when you swipe right, you must answer the other person's custom multiple-choice question correctly. If both users answer each other's questions correctly, it's a match!
 
-## Backend
-Uses Firebase as the backend.  Copy & paste firebase WEB config JSON into app.config.js like so:
+## Architecture
 
+- **Frontend:** React Native (Expo)
+- **Backend:** Node.js + Express + Socket.io
+- **Database:** MongoDB with Mongoose
+- **Auth:** JWT
+
+## Setup
+
+### Prerequisites
+- Node.js 18+
+- MongoDB running locally or a MongoDB Atlas URI
+- Expo CLI (`npm install -g expo-cli`)
+
+### Backend
+
+```bash
+cd server
+npm install
+cp .env.example .env   # edit with your values
+npm run dev
 ```
-export default ({ config }) => {
-    return {
-        ...config,
-        extra: {
-            firebaseCreds: {
-                apiKey: "asdfasdfasdf",
-                authDomain: "asdf-32fd69.firebaseapp.com",
-                projectId: "asdf-32fd69",
-                storageBucket: "asdf-32fd69.appspot.com",
-                messagingSenderId: "232423432423",
-                appId: "1:34234234234:web:f231cba11232bf12ac1112",
-                measurementId: "G-OIUCNX2N"
-            }
-        }
-    };
-};
+
+The server runs on `http://localhost:3000` by default.
+
+### Frontend
+
+```bash
+cd app
+npm install
+npx expo start
 ```
 
-### To Run
+### Demo env
+```bash
+node seed.js
+```
 
-install expo and run ```expo start```
+Seeds the environment with users and messages etc
+
+Scan the QR code with Expo Go, or press `i` for iOS simulator / `a` for Android emulator.
+
+### Environment Variables (server/.env)
+
+| Variable        | Description               | Default                               |
+| --------------- | ------------------------- | ------------------------------------- |
+| PORT            | Server port               | 3000                                  |
+| MONGODB_URI     | MongoDB connection string | mongodb://localhost:27017/dating-game |
+| JWT_SECRET      | Secret for signing tokens | (required)                            |
+| MAX_DISTANCE_KM | Default discovery radius  | 50                                    |
+
+## How It Works
+
+1. **Sign up** and create your profile with photos, a bio, and a custom multiple-choice question.
+2. **Discover** nearby users by swiping through profiles.
+3. **Swipe right** on someone you like — you'll be shown their question. Answer correctly to proceed.
+4. If they also swipe right on you AND answer your question correctly, **it's a match!**
+5. Matched users can **chat in real-time** via Socket.io.
