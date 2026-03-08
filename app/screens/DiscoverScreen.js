@@ -78,7 +78,19 @@ export default function DiscoverScreen() {
 
   const panResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponder: () => false,
+      onMoveShouldSetPanResponder: (_, gesture) => {
+        // Only claim the gesture if vertical movement dominates (card drag)
+        // or horizontal movement is large enough to be a card swipe, not a photo swipe
+        const absX = Math.abs(gesture.dx);
+        const absY = Math.abs(gesture.dy);
+        // Let the photo carousel handle small horizontal swipes
+        if (absX > absY && absX < 15) return false;
+        // If mostly vertical, take it (dragging the card)
+        if (absY > absX) return true;
+        // Large horizontal = card swipe
+        return absX > 15 && absY > 5;
+      },
       onPanResponderMove: (_, gesture) => {
         position.setValue({ x: gesture.dx, y: gesture.dy });
       },
